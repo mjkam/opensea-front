@@ -1,0 +1,15 @@
+.header-container {
+  box-shadow: rgb(4 17 29 / 25%) 0px 0px 8px 0px;
+}
+
+.search-container {
+  box-shadow: rgb(0 0 0 / 16%) 0px 4px 16px;
+}
+
+.search-item-profile {
+  border: 1px solid rgb(220, 220, 220);
+}
+
+.search-item-underline {
+  border-bottom: 1px solid rgb(229, 232, 235);
+}
