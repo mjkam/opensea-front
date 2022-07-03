@@ -37,7 +37,7 @@
         <a class="px-[20px] flex items-center" href="/">
           <i class="material-icons-outlined text-[32px] text-[#707A83]">account_circle</i>
         </a>
-        <button class="flex items-center px-[20px]">
+        <button @click="toggleWalletMenu()" class="flex items-center px-[20px] focus:outline-none">
           <i class="material-icons-outlined text-[32px] text-[#707A83]">account_balance_wallet</i>
         </button>
       </div>
@@ -46,8 +46,13 @@
 </template>
 
 <script>
+import { mapMutations } from "vuex";
+
 export default {
-  name: 'Header'
+  name: 'Header',
+  methods: {
+    ...mapMutations(['toggleWalletMenu'])
+  }
 }
 </script>
 

@@ -1,6 +1,25 @@
 import { createApp } from 'vue'
+import { createStore } from 'vuex'
 import App from './App.vue'
 import router from './router'
 import './index.css'
 
-createApp(App).use(router).mount('#app')
+const store = createStore({
+  state() {
+    return {
+      walletMenuOpened: false,
+    }
+  },
+  mutations: {
+    toggleWalletMenu(state) {
+      state.walletMenuOpened = !state.walletMenuOpened;
+    }
+  }
+});
+
+const app = createApp(App);
+app.use(router);
+app.use(store);
+app.mount('#app');
+
+// createApp(App).use(router).mount('#app')
