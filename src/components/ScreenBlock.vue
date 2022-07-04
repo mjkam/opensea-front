@@ -5,14 +5,18 @@
   </div> -->
   <div 
     class="fixed inset-0 z-[80] transition-opacity duration-[300ms] bg-[#00000026]" 
+    @click="toggleWalletMenu"
     :class="screenClass">
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapMutations, mapState } from 'vuex'
 
 export default {
+  methods: {
+    ...mapMutations(['toggleWalletMenu'])
+  },
   computed: {
     ...mapState(['walletMenuOpened']),
     screenClass() {
