@@ -13,11 +13,28 @@
       </div>
       <div class="flex w-full">
         <div class="w-full flex flex-col justify-center">
-          <div class="flex items-center rounded-[10px] box-border border-[2px] border-solid border-[#E5E8EB] h-[48px] p-[8px]">
-            <div class="flex flex-col justify-center mr-[8px]">
-              <i color="gray" value="search" size="24" class="material-icons">search</i>
+          <div class="relative">
+            <div class="flex items-center rounded-[10px] box-border border-[2px] border-solid border-[#E5E8EB] h-[48px] p-[8px]">
+              <div class="flex flex-col justify-center mr-[8px]">
+                <i class="material-icons text-[#707A83]">search</i>
+              </div>
+              <input type="text" v-model="search" class="w-full bg-transparent focus:outline-none" placeholder="Search items, collections, and accounts"/>
             </div>
-            <input type="text" class="w-full bg-transparent focus:outline-none" placeholder="Search items, collections, and accounts"/>
+
+            <div class="w-full absolute z-[999] bg-white shadow-search rounded-[10px]">
+              <DescriptionItem :isEnd="false">COLLECTIONS</DescriptionItem>
+              <LoadingItem />
+              <CollectionItem 
+                :imgUrl="'https://lh3.googleusercontent.com/QpuZz0BgXet0Q9Ytp2oBqp78FdUfudPRSy1DiSt7h-CDBiwVtKt11mTIjkHc_JqGEWm5v1LI_Fmq5NM4Rc1f-kFzHbLKT5mPd6CTeg=s64'"
+                :name="'aaa'"
+                :count="'100'"
+                />
+              <AccountItem 
+                :imgUrl="'https://lh3.googleusercontent.com/QpuZz0BgXet0Q9Ytp2oBqp78FdUfudPRSy1DiSt7h-CDBiwVtKt11mTIjkHc_JqGEWm5v1LI_Fmq5NM4Rc1f-kFzHbLKT5mPd6CTeg=s64'"
+                :name="'aaa'"
+              />
+              <DescriptionItem :isEnd="true">Press Enter to search all items</DescriptionItem>
+            </div>
           </div>
         </div>
       </div>
@@ -31,8 +48,13 @@
         <div class="flex items-center px-[20px]">
           Resources
         </div>
-        <div class="flex items-center px-[20px]">
-          Create
+        <div class="relative  bg-blue-200">
+          <div class="flex px-[20px] items-center w-full h-full">
+            Create
+          </div>
+          <div class="absolute bg-purple-200">
+            aaa
+          </div>
         </div>
         <a class="px-[20px] flex items-center" href="/">
           <i class="material-icons-outlined text-[32px] text-[#707A83]">account_circle</i>
@@ -47,12 +69,30 @@
 
 <script>
 import { mapMutations } from "vuex";
+import Loading from "../Loading.vue";
+import LoadingItem from "./search/LoadingItem.vue";
+import DescriptionItem from "./search/DescriptionItem.vue";
+import CollectionItem from "./search/CollectionItem.vue";
+import AccountItem from "./search/AccountItem.vue";
+import axios from "axios";
 
 export default {
-  name: 'Header',
-  methods: {
-    ...mapMutations(['toggleWalletMenu'])
-  }
+    name: "Header",
+    data() {
+        return {
+            search: "",
+            timer: 0,
+        };
+    },
+    methods: {
+      ...mapMutations(["toggleWalletMenu"]),
+    },
+    computed: {
+      hello() {
+        console.log(this.search);
+      }
+    },
+    components: { Loading, LoadingItem, DescriptionItem, CollectionItem, AccountItem }
 }
 </script>
 

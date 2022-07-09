@@ -11,19 +11,19 @@
 </template>
 
 <script>
-import { mapMutations, mapState } from 'vuex'
+import { mapMutations, mapGetters } from 'vuex'
 
 export default {
   methods: {
     ...mapMutations(['toggleWalletMenu'])
   },
   computed: {
-    ...mapState(['walletMenuOpened']),
+    ...mapGetters(['getWalletMenuOpened']),
     screenClass() {
       return {
-        'opacity-[1]' : this.walletMenuOpened , 
-        'opacity-0' : !this.walletMenuOpened ,
-        'h-[0px]' : !this.walletMenuOpened,
+        'opacity-[1]' : this.getWalletMenuOpened , 
+        'opacity-0' : !this.getWalletMenuOpened ,
+        'h-[0px]' : !this.getWalletMenuOpened,
       }
     }
   }

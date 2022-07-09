@@ -7,10 +7,12 @@ module.exports = {
   theme: {
     extend: {
       transitionProperty: {
-        'transform': 'transform'
+        // 'transform': 'transform'
       },
       boxShadow: {
-        'header': 'rgb(4 17 29 / 25%) 0px 0px 8px 0px'
+        'header': 'rgb(4 17 29 / 25%) 0px 0px 8px 0px',
+        'search': 'rgb(0 0 0 / 16%) 0px 4px 16px',
+        'search-item': 'rgb(4 17 29 / 25%) 0px 0px 8px 0px',
       }
     },
   },

@@ -1,4 +1,5 @@
 import { createStore } from 'vuex'
+import axios from 'axios';
 
 const store = createStore({
   state() {
@@ -10,12 +11,20 @@ const store = createStore({
           'title': "MyTitle",
           'creator': "i'm creator"
         }
-      ]
+      ],
+      searchResults: [],
     }
   },
   mutations: {
     toggleWalletMenu(state) {
       state.walletMenuOpened = !state.walletMenuOpened;
+    }
+  },
+  actions: {
+  },
+  getters: {
+    getWalletMenuOpened(state) {
+      return state.walletMenuOpened;
     }
   }
 });

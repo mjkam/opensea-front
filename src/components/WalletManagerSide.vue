@@ -32,16 +32,14 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
-
-
   computed: {
-    ...mapState(["walletMenuOpened"]),
+    ...mapGetters(["getWalletMenuOpened"]),
     toggleClass() {
       return {
-        'translate-x-full': !this.walletMenuOpened,
+        'translate-x-full': !this.getWalletMenuOpened,
       }
     }
   },
