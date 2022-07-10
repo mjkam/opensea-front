@@ -8,10 +8,10 @@
 
 <script>
 export default {
-  props: ['isEnd'],
+  props: ['isStatement'],
   computed: {
     itemClass() {
-      return this.isEnd ?
+      return this.isStatement ?
         ['text-[14px]', 'font-[400]'] :
         ['text-[12px]', 'font-[600]', 'border-b-[1px]']
     }

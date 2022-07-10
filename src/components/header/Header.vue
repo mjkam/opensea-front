@@ -18,49 +18,96 @@
               <div class="flex flex-col justify-center mr-[8px]">
                 <i class="material-icons text-[#707A83]">search</i>
               </div>
-              <input type="text" v-model="search" class="w-full bg-transparent focus:outline-none" placeholder="Search items, collections, and accounts"/>
+              <input type="text" v-model="search" @keyup="handleSearchInputEvent"  class="w-full bg-transparent focus:outline-none" placeholder="Search items, collections, and accounts"/>
             </div>
-
-            <div class="w-full absolute z-[999] bg-white shadow-search rounded-[10px]">
-              <DescriptionItem :isEnd="false">COLLECTIONS</DescriptionItem>
-              <LoadingItem />
-              <CollectionItem 
-                :imgUrl="'https://lh3.googleusercontent.com/QpuZz0BgXet0Q9Ytp2oBqp78FdUfudPRSy1DiSt7h-CDBiwVtKt11mTIjkHc_JqGEWm5v1LI_Fmq5NM4Rc1f-kFzHbLKT5mPd6CTeg=s64'"
-                :name="'aaa'"
-                :count="'100'"
-                />
-              <AccountItem 
-                :imgUrl="'https://lh3.googleusercontent.com/QpuZz0BgXet0Q9Ytp2oBqp78FdUfudPRSy1DiSt7h-CDBiwVtKt11mTIjkHc_JqGEWm5v1LI_Fmq5NM4Rc1f-kFzHbLKT5mPd6CTeg=s64'"
-                :name="'aaa'"
-              />
-              <DescriptionItem :isEnd="true">Press Enter to search all items</DescriptionItem>
+            <div v-if="searching" class="w-full absolute z-[999] bg-white shadow-search rounded-[10px]">
+              <LoadingItem v-if="loading"/>
+              <DescriptionItem v-if="noItems" :isStatement="true">No items found</DescriptionItem>
+              <Items 
+                v-if="!loading && !noItems"
+                :collections="this.collections"
+                :accounts="this.accounts"/>
+              <DescriptionItem v-if="loading || !noItems" :isStatement="true">Press Enter to search all items</DescriptionItem>
             </div>
           </div>
         </div>
       </div>
-      <div class="flex text-[16px] font-[600] text-[#04111DBF]">
-        <div class="flex items-center px-[20px]">
+      <div class="flex text-[16px] font-[600] text-[#04111DBF] ">
+        <a href="/explore-collections" class="flex items-center px-[20px] hover:text-[#04111d] relative after:absolute after:w-full after:h-[4px] after:left-[0] after:bottom-0 after:rounded-t-[4px]" :class="exploreTabClass">
           Explore
+        </a>
+        <div class="relative" @mouseenter="showDropDown($event, 'stats')" @mouseleave="hideDropDown($event, 'stats')">
+          <a href="/rankings" class="flex px-[20px] items-center z-[1000] w-full h-full hover:text-[#04111d] after:absolute after:w-full after:h-[4px] after:left-[0] after:bottom-0 after:rounded-t-[4px]" :class="statsTabClass">
+            Stats
+          </a>
+          <div class="w-[220px] absolute shadow-search rounded-b-[10px]" v-if="this.statsMenuOpened">
+            <div class="flex flex-col">
+              <div class="text-[#04111D] font-[600] p-[16px] border-b-[1px]">
+                <a href="/rankings">
+                  Rankings
+                </a>
+              </div>
+              <div class="text-[#04111D] font-[600] p-[16px] rounded-b-[10px]">
+                <a href="/activity">
+                  Activity
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="flex items-center px-[20px]">
-          Stats
-        </div>
-        <div class="flex items-center px-[20px]">
+        <div class="flex items-center px-[20px] hover:text-[#04111d]">
           Resources
         </div>
-        <div class="relative  bg-blue-200">
-          <div class="flex px-[20px] items-center w-full h-full">
-            Create
-          </div>
-          <div class="absolute bg-purple-200">
-            aaa
+        <div class="relative">
+          <a href="/asset/create">
+            <div class="flex px-[20px] items-center w-full h-full hover:text-[#04111d] after:absolute after:w-full after:h-[4px] after:left-[0] after:bottom-0 after:rounded-t-[4px]" :class="createTabClass">
+              Create
+            </div>
+          </a>
+          <div class="w-[220px] absolute shadow-search rounded-b-[10px]" v-if="this.profileMenuOpened" @mouseenter="showDropDown($event, 'profile')" @mouseleave="hideDropDown($event, 'profile')">
+            <div class="flex flex-col">
+              <a href="/rankings">
+                <div class="flex text-[#04111D] font-[600] p-[16px] border-b-[1px]">
+                  <div class="mr-[16px] flex items-center justify-center"><i class="material-icons text-[#353840]">person</i></div>
+                  <div class="text-[#04111D] font-[600]">Profile</div>
+                </div>
+              </a>
+              <a href="/rankings">
+                <div class="flex text-[#04111D] font-[600] p-[16px] border-b-[1px]">
+                  <div class="mr-[16px] flex items-center justify-center"><i class="material-icons text-[#353840]">favorite_border</i></div>
+                  <div class="text-[#04111D] font-[600]">Favorites</div>
+                </div>
+              </a>
+              <a href="/rankings">
+                <div class="flex text-[#04111D] font-[600] p-[16px] border-b-[1px]">
+                  <div class="mr-[16px] flex items-center justify-center"><i class="material-icons text-[#353840]">grid_on</i></div>
+                  <div class="text-[#04111D] font-[600]">My Collections</div>
+                </div>
+              </a>
+              <a href="/rankings">
+                <div class="flex text-[#04111D] font-[600] p-[16px] border-b-[1px]">
+                  <div class="mr-[16px] flex items-center justify-center"><i class="material-icons text-[#353840]">logout</i></div>
+                  <div class="text-[#04111D] font-[600]">Log Out</div>
+                </div>
+              </a>
+              <a href="/rankings">
+                <div class="flex text-[#04111D] font-[600] p-[16px] border-b-[1px]">
+                  <div class="mr-[16px] flex items-center justify-center"><i class="material-icons text-[#353840]">settings</i></div>
+                  <div class="text-[#04111D] font-[600]">Settings</div>
+                </div>
+              </a>
+            </div>
           </div>
         </div>
-        <a class="px-[20px] flex items-center" href="/">
-          <i class="material-icons-outlined text-[32px] text-[#707A83]">account_circle</i>
-        </a>
-        <button @click="toggleWalletMenu()" class="flex items-center px-[20px] focus:outline-none">
-          <i class="material-icons-outlined text-[32px] text-[#707A83]">account_balance_wallet</i>
+        <div class="relative" @mouseenter="showDropDown($event, 'profile')" @mouseleave="hideDropDown($event, 'profile')">
+          <a href="/">
+            <div class="flex px-[20px] items-center z-[1000] w-full h-full text-[#707A83] hover:text-[#04111d] after:absolute after:w-full after:h-[4px] after:left-[0] after:bottom-0 after:rounded-t-[4px]" :class="profileTabClass">
+              <i class="material-icons-outlined text-[32px]">account_circle</i>
+            </div>
+          </a>
+        </div>
+        <button @click="toggleWalletMenu()" class="flex items-center px-[20px] focus:outline-none text-[#707A83] hover:text-[#04111d]">
+          <i class="material-icons-outlined text-[32px]">account_balance_wallet</i>
         </button>
       </div>
     </nav>
@@ -70,29 +117,113 @@
 <script>
 import { mapMutations } from "vuex";
 import Loading from "../Loading.vue";
-import LoadingItem from "./search/LoadingItem.vue";
-import DescriptionItem from "./search/DescriptionItem.vue";
-import CollectionItem from "./search/CollectionItem.vue";
-import AccountItem from "./search/AccountItem.vue";
+import LoadingItem from "./search/item/LoadingItem.vue";
+import DescriptionItem from "./search/item/DescriptionItem.vue";
+import CollectionItem from "./search/item/CollectionItem.vue";
+import AccountItem from "./search/item/AccountItem.vue";
 import axios from "axios";
+import SearchResult from "./search/Items.vue";
+import Items from "./search/Items.vue";
+import { BASE_URL } from "../../constant";
 
 export default {
     name: "Header",
     data() {
         return {
+            profileMenuOpened: false,
+            statsMenuOpened: false,
+            showItems: false,
+            noItems: false,
+            searching: false,
+            loading: false,
             search: "",
             timer: 0,
+            collections: [],
+            accounts: [],
         };
     },
     methods: {
       ...mapMutations(["toggleWalletMenu"]),
-    },
-    computed: {
-      hello() {
-        console.log(this.search);
+      handleSearchInputEvent: function(e) {
+        clearTimeout(this.timer);
+        this.timer = setTimeout(() => {
+          this.searching = this.search.length >= 3;
+          this.loading = true;
+          this.noItems = false;
+          this.showItems = false;
+          this.getSearchResults();
+        }, 300);
+      },
+      getSearchResults: async function() {
+        let result = await axios.get(BASE_URL + "/search?keyword=" + this.search);
+        this.accounts = [];
+        this.collections = [];
+        this.collections.push(...result.data.collections);
+        this.accounts.push(...result.data.accounts);
+        this.loading = false;
+        this.noItems = this.collections.length == 0 && this.accounts.length == 0;
+        this.showItems = !this.noItems;
+      },
+      showDropDown: function(e, target) {
+        switch(target) {
+          case 'stats':
+            this.statsMenuOpened = true;
+            break;
+          case 'profile':
+            this.profileMenuOpened = true;
+            break;
+          default:
+            throw 'Invalid Event: ' + target;
+        }
+      },
+      hideDropDown: function(e, target) {
+        switch(target) {
+          case 'stats':
+            this.statsMenuOpened = false;
+            break;
+          case 'profile':
+            this.profileMenuOpened = false;
+            break;
+          default:
+            throw 'Invalid Event: ' + target;
+        }
       }
     },
-    components: { Loading, LoadingItem, DescriptionItem, CollectionItem, AccountItem }
+    computed: {
+      exploreTabClass() {
+        const isExploreTab = this.$route.path == '/explore-collections';
+        return {
+          'after:bg-[#2081E2]' : isExploreTab,
+          'after:bg-transparent' : !isExploreTab,
+          'text-[#04111d]': isExploreTab
+        }
+      },
+      statsTabClass() {
+        const isStatsTab = this.$route.path == '/rankings' || this.$route.path == '/activity';
+        return {
+          'after:bg-[#2081E2]' : isStatsTab,
+          'after:bg-transparent' : !isStatsTab,
+          'text-[#04111d]': isStatsTab
+        }
+      },
+      createTabClass() {
+        const isCreateTab = this.$route.path == '/asset/create';
+        return {
+          'after:bg-[#2081E2]' : isCreateTab,
+          'after:bg-transparent' : !isCreateTab,
+          'text-[#04111d]': isCreateTab
+        }
+      },
+      profileTabClass() {
+        const isAccountTab = this.$route.path == '/account';
+        return {
+          'after:bg-[#2081E2]' : isAccountTab,
+          'after:bg-transparent' : !isAccountTab,
+          'text-[#04111d]': isAccountTab
+        }
+      },
+    },
+    components: { Loading, LoadingItem, DescriptionItem, CollectionItem, AccountItem, SearchResult, Items }
 }
 </script>
 
