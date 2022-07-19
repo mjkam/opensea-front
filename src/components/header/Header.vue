@@ -37,21 +37,14 @@
           Explore
         </a>
         <div class="relative" @mouseenter="showDropDown($event, 'stats')" @mouseleave="hideDropDown($event, 'stats')">
-          <a href="/rankings" class="flex px-[20px] items-center z-[1000] w-full h-full hover:text-[#04111d] after:absolute after:w-full after:h-[4px] after:left-[0] after:bottom-0 after:rounded-t-[4px]" :class="statsTabClass">
+          <a href="/" class="flex px-[20px] items-center z-[1000] w-full h-full hover:text-[#04111d] after:absolute after:w-full after:h-[4px] after:left-[0] after:bottom-0 after:rounded-t-[4px]" :class="statsTabClass">
             Stats
           </a>
-          <div class="w-[220px] absolute shadow-search rounded-b-[10px]" v-if="this.statsMenuOpened">
+          <div class="w-[220px] absolute shadow-search rounded-b-[10px] bg-white" v-if="this.statsMenuOpened">
             <div class="flex flex-col">
-              <div class="text-[#04111D] font-[600] p-[16px] border-b-[1px]">
-                <a href="/rankings">
-                  Rankings
-                </a>
-              </div>
-              <div class="text-[#04111D] font-[600] p-[16px] rounded-b-[10px]">
-                <a href="/activity">
-                  Activity
-                </a>
-              </div>
+              <a href="/activity" class="text-[#04111D] font-[600] p-[16px] rounded-b-[10px]">
+                Activity
+              </a>
             </div>
           </div>
         </div>
@@ -65,32 +58,32 @@
             </div>
           </a>
           <div class="w-[220px] absolute shadow-search rounded-b-[10px]" v-if="this.profileMenuOpened" @mouseenter="showDropDown($event, 'profile')" @mouseleave="hideDropDown($event, 'profile')">
-            <div class="flex flex-col">
-              <a href="/rankings">
+            <div class="flex flex-col bg-white">
+              <a href="/">
                 <div class="flex text-[#04111D] font-[600] p-[16px] border-b-[1px]">
                   <div class="mr-[16px] flex items-center justify-center"><i class="material-icons text-[#353840]">person</i></div>
                   <div class="text-[#04111D] font-[600]">Profile</div>
                 </div>
               </a>
-              <a href="/rankings">
+              <a href="/">
                 <div class="flex text-[#04111D] font-[600] p-[16px] border-b-[1px]">
                   <div class="mr-[16px] flex items-center justify-center"><i class="material-icons text-[#353840]">favorite_border</i></div>
                   <div class="text-[#04111D] font-[600]">Favorites</div>
                 </div>
               </a>
-              <a href="/rankings">
+              <a href="/collections">
                 <div class="flex text-[#04111D] font-[600] p-[16px] border-b-[1px]">
                   <div class="mr-[16px] flex items-center justify-center"><i class="material-icons text-[#353840]">grid_on</i></div>
                   <div class="text-[#04111D] font-[600]">My Collections</div>
                 </div>
               </a>
-              <a href="/rankings">
+              <a href="/">
                 <div class="flex text-[#04111D] font-[600] p-[16px] border-b-[1px]">
                   <div class="mr-[16px] flex items-center justify-center"><i class="material-icons text-[#353840]">logout</i></div>
                   <div class="text-[#04111D] font-[600]">Log Out</div>
                 </div>
               </a>
-              <a href="/rankings">
+              <a href="/">
                 <div class="flex text-[#04111D] font-[600] p-[16px] border-b-[1px]">
                   <div class="mr-[16px] flex items-center justify-center"><i class="material-icons text-[#353840]">settings</i></div>
                   <div class="text-[#04111D] font-[600]">Settings</div>
@@ -199,7 +192,7 @@ export default {
         }
       },
       statsTabClass() {
-        const isStatsTab = this.$route.path == '/rankings' || this.$route.path == '/activity';
+        const isStatsTab = this.$route.path == '/' || this.$route.path == '/activity';
         return {
           'after:bg-[#2081E2]' : isStatsTab,
           'after:bg-transparent' : !isStatsTab,

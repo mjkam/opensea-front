@@ -4,17 +4,14 @@
       <h1 class="text-[#04111D] text-[40px] my-[26px]">Explore Collections</h1>
     </div>
     <div class="grid grid-cols-3 gap-[30px] py-[40px] px-[52px]">
-      <CollectionCard 
-        v-for="(c, index) in collections" 
-        :key="index"
-        :collection="c" />
+      <CollectionCard />
     </div>
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
-import CollectionCard from '../components/CollectionCard.vue';
+import CollectionCard from "../components/CollectionCard.vue";
 
 
 export default {
