@@ -15,15 +15,16 @@ import { mapMutations, mapGetters } from 'vuex'
 
 export default {
   methods: {
-    ...mapMutations(['toggleWalletMenu'])
   },
   computed: {
-    ...mapGetters(['getWalletMenuOpened']),
+    ...mapGetters({
+      'walletOpened': 'wallet/walletOpened',
+    }),
     screenClass() {
       return {
-        'opacity-[1]' : this.getWalletMenuOpened , 
-        'opacity-0' : !this.getWalletMenuOpened ,
-        'h-[0px]' : !this.getWalletMenuOpened,
+        'opacity-[1]' : this.walletOpened , 
+        'opacity-0' : !this.walletOpened ,
+        'h-[0px]' : !this.walletOpened,
       }
     }
   }

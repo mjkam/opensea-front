@@ -22,5 +22,13 @@
         "name": "aaa"
       }
     ]
+  },
+  "profile": {
+    "profileImgUrl": "https://lh3.googleusercontent.com/j-STPIAdw5t10mVLf3dG-ygMz76_TvZrhV0uPFdDslyoLr70-sYm7QUJAlN145DxPO_HdVeSFX0zBHdTMc9fj_ANCoOfgYa1jNh-=s100",
+    "userId": 1
+  },
+  "balance": {
+    "ethBalance": "30.01",
+    "ethPrice": 1350.02
   }
 }

@@ -1,4 +1,20 @@
 <template>
+  <div>
+    
+  </div>
+</template>
+
+<script>
+export default {
+
+}
+</script>
+
+<style>
+
+</style>
+
+<!-- <template>
   <div class="relative">
     <div class="absolute top-0 left-0 h-[586px] w-full home-background">
     </div>
@@ -72,4 +88,4 @@ export default {
   .image-shadow {
     box-shadow: rgb(4 17 29 / 25%) 0px 0px 10px 0px;
   }
-</style>
+</style> -->
