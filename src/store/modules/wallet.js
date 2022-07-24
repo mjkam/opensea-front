@@ -31,6 +31,8 @@ export default {
       state.ethPrice = payload.ethPrice;
     },
     [LOG_OUT]: (state) => {
+      state.profileImgUrl = '';
+      state.userId = null;
       state.walletAddress = '';
       state.ethBalance = 0;
       state.ethPrice = 0;
